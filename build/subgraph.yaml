@@ -1,6 +1,6 @@
 specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
   - kind: ethereum
     name: TodoList
@@ -18,14 +18,8 @@ dataSources:
         - Owner
       abis:
         - name: TodoList
-          file: ./abis/TodoList.json
+          file: TodoList/abis/TodoList.json
       eventHandlers:
         - event: TaskCreated(uint256,string)
           handler: handleTaskCreated
-        # - event: TaskDeleted(uint256)
-        #   handler: handleTaskDeleted
-        # - event: TaskEdited(uint256,string,bool)
-        #   handler: handleTaskEdited
-        # - event: ToggleTaskCompleted(uint256,bool)
-        #   handler: handleToggleTaskCompleted
-      file: ./src/mapping.ts
+      file: TodoList/TodoList.wasm
