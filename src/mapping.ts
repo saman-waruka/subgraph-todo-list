@@ -8,15 +8,15 @@ import {
 } from "../generated/TodoList/TodoList";
 import { Task, Owner } from "../generated/schema";
 
+function getTaskId(ownerAddress: string, paramId: string): string {
+  return `${ownerAddress}_${paramId}`;
+}
+
 export function handleTaskCreated(event: TaskCreated): void {
-  const transactionFrom = event.transaction.from.toHex();
-  let owner = Owner.load(transactionFrom);
-  if (!owner) {
-    owner = new Owner(transactionFrom);
-  }
-  let task = Task.load(event.params.id.toString());
+  const transactionFrom = event.transaction.from.toHexString();
   const eventParamId = event.params.id.toString();
-  const taskId = `${transactionFrom}:${eventParamId}`;
+  const taskId = getTaskId(transactionFrom, eventParamId);
+  let task = Task.load(taskId);
   if (!task) {
     task = new Task(taskId);
     task.content = event.params.content;
@@ -25,15 +25,15 @@ export function handleTaskCreated(event: TaskCreated): void {
   }
   task.save();
 
-  let tasks = owner.tasks;
-  tasks.push(taskId);
-  owner.tasks = tasks;
+  let owner = Owner.load(transactionFrom);
+  if (!owner) {
+    owner = new Owner(transactionFrom);
+  }
   owner.save();
 }
 
 // export function handleTaskDeleted(event: TaskDeleted): void {
 //   const entity = Task.load(event.params.id.toString());
-//   entity?.unset()
 // }
 
 // export function handleTaskEdited(event: TaskEdited): void {
