@@ -68,5 +68,5 @@ export function handleToggleTaskCompleted(event: ToggleTaskCompleted): void {
   if (!task) {
     return;
   }
-  task.completed = task.completed;
+  task.completed = event.params.completed;
 }
