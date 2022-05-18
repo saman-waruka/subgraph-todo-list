@@ -1,7 +1,7 @@
 {
   "name": "samansubgraph",
   "license": "UNLICENSED",
-  "version": "0.0.11",
+  "version": "0.0.40",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
